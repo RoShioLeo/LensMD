@@ -3,6 +3,12 @@ name: Release LensMD
 on:
   push:
     tags: ["lensmd-v*"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "LensMD release tag"
+        required: true
+        default: "lensmd-v1.0.0"
 
 permissions:
   contents: write
@@ -10,8 +16,12 @@ permissions:
 jobs:
   release:
     runs-on: ubuntu-latest
+    env:
+      RELEASE_TAG: ${{ github.event.inputs.tag || github.ref_name }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.tag || github.ref }}
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -24,8 +34,13 @@ jobs:
           version: "12.16.1"
           package_json_file: console/package.json
       - name: Build and test
-        run: ./gradlew build -Pversion="${GITHUB_REF_NAME#lensmd-v}"
+        run: ./gradlew build -Pversion="${RELEASE_TAG#lensmd-v}"
       - name: Publish JAR with matching source tag
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create "$GITHUB_REF_NAME" build/libs/*.jar --verify-tag --generate-notes
+        run: |
+          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            gh release upload "$RELEASE_TAG" build/libs/*.jar --clobber
+          else
+            gh release create "$RELEASE_TAG" build/libs/*.jar --verify-tag --title "LensMD ${RELEASE_TAG#lensmd-v}" --generate-notes
+          fi
