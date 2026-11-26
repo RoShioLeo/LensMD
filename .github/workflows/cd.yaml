@@ -8,7 +8,7 @@ on:
       tag:
         description: "LensMD release tag"
         required: true
-        default: "lensmd-v1.0.0"
+        default: "lensmd-v1.0.1"
 
 permissions:
   contents: write

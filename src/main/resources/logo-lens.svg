@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <title>LensMD</title>
+  <rect width="64" height="64" rx="15" fill="#176a75"/>
+  <g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="32" cy="32" r="20" stroke-width="2.4"/>
+    <circle cx="32" cy="32" r="13.5" stroke-width="1.8"/>
+    <path d="M36.85 34.8L23.51 42.5 M32 37.6L18.66 29.9 M27.15 34.8L27.15 19.4 M27.15 29.2L40.49 21.5 M32 26.4L45.34 34.1 M36.85 29.2L36.85 44.6" stroke-width="1.8"/>
+  </g>
+</svg>

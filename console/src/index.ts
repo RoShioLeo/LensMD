@@ -15,7 +15,7 @@ export default definePlugin({
             loadingComponent: VLoading,
           }),
           rawType: "markdown",
-          logo: "/plugins/lensmd/assets/logo.svg",
+          logo: "/plugins/lensmd/assets/logo-lens.svg",
         },
       ];
     },
