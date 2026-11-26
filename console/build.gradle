@@ -6,7 +6,7 @@ plugins {
 group 'run.halo.bytemd.ui'
 
 node {
-    pnpmVersion = '12'
+    pnpmVersion = '12.16.1'
 }
 
 tasks.register('pnpmBuild', PnpmTask) {
@@ -15,10 +15,13 @@ tasks.register('pnpmBuild', PnpmTask) {
     args = ['build']
     dependsOn tasks.named('pnpmInstall')
     inputs.dir(layout.projectDirectory.dir('src'))
+    inputs.dir(layout.projectDirectory.dir('scripts'))
+    inputs.file(rootProject.layout.projectDirectory.file('src/main/resources/markdown-extensions.css'))
     inputs.files(fileTree(
         dir: layout.projectDirectory,
         includes: ['*.cjs', '*.ts', '*.js', '*.json', '*.yaml']))
     outputs.dir(layout.buildDirectory.dir('dist'))
+    outputs.file(layout.buildDirectory.file('generated/THIRD_PARTY_NOTICES.txt'))
 }
 
 tasks.register('pnpmCheck', PnpmTask) {

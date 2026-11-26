@@ -1,25 +1,21 @@
 apiVersion: plugin.halo.run/v1alpha1
 kind: Plugin
 metadata:
-  name: PluginBytemd
-  annotations:
-    # Add supports for Halo App Store
-    # https://www.halo.run/store/apps/app-HTyhC
-    "store.halo.run/app-id": "app-HTyhC"
+  name: lensmd
 spec:
   enabled: true
   requires: ">=2.26.0"
   author:
-    name: Halo
-    website: https://github.com/halo-dev
-  logo: logo.png
-  homepage: https://www.halo.run/store/apps/app-HTyhC
-  repo: https://github.com/halo-sigs/plugin-bytemd
-  issues: https://github.com/halo-sigs/plugin-bytemd/issues
-  displayName: "ByteMD"
-  description: "对 ByteMD 的集成，让文章支持 Markdown 编辑"
-  settingName: setting-plugin-bytemd
-  configMapName: configmap-plugin-bytemd
+    name: RoShioLeo
+    website: https://www.lemonslice.cloud
+  logo: logo.svg
+  homepage: https://github.com/RoShioLeo/LensMD
+  repo: https://github.com/RoShioLeo/LensMD
+  issues: https://github.com/RoShioLeo/LensMD/issues
+  displayName: "LensMD"
+  description: "基于 ByteMD 的 Halo Markdown 编辑器，支持提示框、高亮、上下标、Emoji 和目录"
+  settingName: setting-lensmd
+  configMapName: configmap-lensmd
   license:
     - name: "GPL-3.0"
-      url: "https://github.com/halo-sigs/plugin-bytemd/blob/main/LICENSE"
+      url: "https://github.com/RoShioLeo/LensMD/blob/main/LICENSE"

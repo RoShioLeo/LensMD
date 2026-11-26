@@ -44,6 +44,15 @@ tasks.named('classes') {
     dependsOn tasks.named('processUiResources')
 }
 
+tasks.named('jar') {
+    from(['LICENSE', 'NOTICE.md']) {
+        into 'META-INF'
+    }
+    from(project(':console').layout.buildDirectory.file('generated/THIRD_PARTY_NOTICES.txt')) {
+        into 'META-INF'
+    }
+}
+
 tasks.named('generatePluginComponentsIdx') {
     notCompatibleWithConfigurationCache('This task invokes "Task.project" at execution time, which is not supported with configuration cache.')
 }

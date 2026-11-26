@@ -7,14 +7,15 @@ export default definePlugin({
     "editor:create": () => {
       return [
         {
+          // Existing posts store "bytemd" as their preferred editor key.
           name: "bytemd",
-          displayName: "ByteMD",
+          displayName: "LensMD",
           component: defineAsyncComponent({
             loader: () => import("./components/bytemd.vue"),
             loadingComponent: VLoading,
           }),
           rawType: "markdown",
-          logo: "/plugins/PluginBytemd/assets/logo.png",
+          logo: "/plugins/lensmd/assets/logo.svg",
         },
       ];
     },

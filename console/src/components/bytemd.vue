@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { Editor } from "@bytemd/vue-next";
 import gfm from "@bytemd/plugin-gfm";
+import gemoji from "@bytemd/plugin-gemoji";
+import {
+  markdownExtensionsPlugin,
+  sanitizeMarkdownExtensions,
+} from "../plugins/markdown-extensions";
 import {
   markdownTable,
   mermaidPlugin,
@@ -19,12 +24,15 @@ import breaks from "@bytemd/plugin-breaks";
 import type { AttachmentLike } from "@halo-dev/ui-shared";
 import { consoleApiClient, ucApiClient } from "@halo-dev/api-client";
 import "bytemd/dist/index.css";
-import "github-markdown-css/github-markdown-light.css";
+import "github-markdown-css/github-markdown.css";
 import "../styles/main.scss";
+import "../../../src/main/resources/markdown-extensions.css";
 
 const basePlugins: BytemdPlugin[] = [
-  gfm(),
+  gfm({ singleTilde: false }),
   pluginSlug(),
+  markdownExtensionsPlugin(),
+  gemoji(),
   mermaidPlugin(),
   math(),
   breaks(),
@@ -146,7 +154,7 @@ onMounted(async () => {
   try {
     const { data } = await consoleApiClient.plugin.plugin.fetchPluginJsonConfig(
       {
-        name: "PluginBytemd",
+        name: "lensmd",
       }
     );
 
@@ -164,9 +172,10 @@ watch(
   () => props.raw,
   async (value) => {
     const version = ++contentRenderVersion;
-    const processor = getProcessor({ plugins: plugins.value }).processSync(
-      value
-    );
+    const processor = getProcessor({
+      plugins: plugins.value,
+      sanitize: sanitizeMarkdownExtensions,
+    }).processSync(value);
     const content = await renderMermaidInHtml(processor.toString());
 
     if (version === contentRenderVersion) {
@@ -226,6 +235,7 @@ const onAttachmentSelect = (attachments: AttachmentLike[]) => {
     <Editor
       :value="raw"
       :plugins="plugins"
+      :sanitize="sanitizeMarkdownExtensions"
       :upload-images="handleUploadImages"
       @change="handleChange"
     />

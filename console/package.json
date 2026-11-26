@@ -1,17 +1,19 @@
 {
+  "type": "module",
   "scripts": {
     "dev": "vite build --mode development --watch",
-    "build": "vite build",
+    "build": "node scripts/third-party-notices.mjs && vite build",
     "type-check": "vue-tsc --noEmit -p tsconfig.json --composite false",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier . --write",
     "format:check": "prettier . --check",
-    "check": "eslint . && prettier . --check && vue-tsc --noEmit -p tsconfig.json --composite false && echo 'No tests'",
-    "test:unit": "echo 'No tests'"
+    "check": "eslint . && prettier . --check && vue-tsc --noEmit -p tsconfig.json --composite false && node --experimental-strip-types --test tests/*.test.mjs",
+    "test:unit": "node --experimental-strip-types --test tests/*.test.mjs"
   },
   "dependencies": {
     "@bytemd/plugin-breaks": "^1.22.0",
+    "@bytemd/plugin-gemoji": "1.22.0",
     "@bytemd/plugin-gfm": "^1.22.0",
     "@bytemd/plugin-math": "^1.22.0",
     "@bytemd/vue-next": "^1.22.0",
@@ -23,13 +25,19 @@
     "axios": "^1.19.0",
     "bytemd": "^1.22.0",
     "github-markdown-css": "^5.9.0",
+    "mdast-util-lemmy-supersub": "1.0.1",
     "mermaid": "^10.9.8",
+    "micromark-extension-lemmy-supersub": "1.0.0",
     "rehype-slug-custom-id": "^2.0.0",
+    "remark-highlight-mark": "1.4.0",
+    "unist-util-visit": "4.1.2",
     "vue": "^3.5.41"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@halo-dev/ui-plugin-bundler-kit": "^2.26.0",
+    "@types/hast": "2.3.10",
+    "@types/mdast": "3.0.15",
     "@types/node": "^24.19.2",
     "@vitejs/plugin-vue": "^6.0.10",
     "@vue/eslint-config-prettier": "^10.2.0",
